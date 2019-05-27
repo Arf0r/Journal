@@ -3,13 +3,14 @@ package com.example.journal;
 import java.io.Serializable;
 
 public class JournalEntry implements Serializable {
+    // Initialize variables
     int id;
     String title;
     String content;
     String mood;
     String timestamp;
 
-
+    // Make a new journal entry
     public JournalEntry(int id, String title, String content, String mood, String timestamp) {
         this.id = id;
         this.title = title;
@@ -18,6 +19,7 @@ public class JournalEntry implements Serializable {
         this.timestamp = timestamp;
     }
 
+    // Getters and setters for all variables
     public int getId() {
         return id;
     }

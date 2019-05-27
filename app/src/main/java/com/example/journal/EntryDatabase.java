@@ -7,16 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class EntryDatabase extends SQLiteOpenHelper {
-
-    // Save the singleton instance of the database
     public static EntryDatabase instance;
 
-    // Construct the database
+    // Constructor for database
     public EntryDatabase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
-    // Create a new database if there isn't one yet
+    // If there is no database yet, make one
     public static EntryDatabase getInstance(Context context){
         if (instance == null) {
             instance = new EntryDatabase(context, "db", null, 1);
@@ -24,7 +22,7 @@ public class EntryDatabase extends SQLiteOpenHelper {
         return instance;
     }
 
-    // Create a table
+    // Create a table in the database
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -32,14 +30,14 @@ public class EntryDatabase extends SQLiteOpenHelper {
                 ", Title TEXT, Content TEXT, Mood TEXT, Time DATETIME default current_timestamp);");
     }
 
-    // If table is upgraded, drop old table and make new one
+    // If that table is updated, replace new with old
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS entries");
         onCreate(db);
     }
 
-
+    // Select all data in the database and returns cursor
     public Cursor selectAll(){
         SQLiteDatabase db = getWritableDatabase();
         String data = "SELECT * FROM" + " entries";

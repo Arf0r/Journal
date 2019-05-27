@@ -10,7 +10,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class InputActivity extends AppCompatActivity {
+    // Initialize variable
     TextView mood;
+
+    // When the activity is started show mood detail layout
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,27 +21,26 @@ public class InputActivity extends AppCompatActivity {
         mood = findViewById(R.id.moodDetail);
     }
 
+    // If submit button is clicked...
     public void submitClicked(View view) {
 
-
-
+        // Save all the input from the user in Strings
         TextView inputTitle = findViewById(R.id.titleDetail);
         String title = inputTitle.getText().toString();
-
         TextView inputContent = findViewById(R.id.contentDetail);
         String content = inputContent.getText().toString();
-
         TextView inputMood = findViewById(R.id.moodDetail);
         String mood = inputMood.getText().toString();
-
         Date currentTime = Calendar.getInstance().getTime();
         String time = String.valueOf(currentTime);
 
+        // Make a new journal entry object with the data from the user
         JournalEntry journalEntry = new JournalEntry(0, title, content, mood, time);
 
-        // Get the database and insert the entry.
+        // Insert the entry into the database
         EntryDatabase.getInstance(this).insert(journalEntry);
 
+        // Start new activity (main)
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -68,6 +70,7 @@ public class InputActivity extends AppCompatActivity {
         outState.putString("mood", mood.getText().toString());
     }
 
+    // Restore text mood
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         String input = savedInstanceState.getString(("mood"));
